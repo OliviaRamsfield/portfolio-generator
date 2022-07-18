@@ -17,19 +17,26 @@
 // printProfileDataArr(profileDataArgs);
 
 // ACTUAL CODE FOR PROJECT
+const inquirer = require("inquirer");
+inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "What is your name?"
+        }
+    ])
+    .then(answers => console.log(answers));
 // activate file system module in node.js
-const fs = require("fs");
+// const fs = require("fs");
+// //connect to export page-template code
+// const generatePage = require("./src/page-template");
 
-//connect to export page-template code
-const generatePage = require("./src/page-template");
+// const pageHTML = generatePage(names, github);
 
-const profileDataArgs = process.argv.slice(2);
+// //generating new file called index.html with the variables names and github and catching error name/message or success
+// fs.writeFile("./index.html", pageHTML, err => {
+//     if (err) throw err;
 
-const [names, github] = profileDataArgs;
-
-//generating new file called index.html with the variables names and github and catching error name/message or success
-fs.writeFile("index.html", generatePage(names, github), err => {
-    if (err) throw err;
-
-    console.log("Portfolio complete! Check out index.html to see the output!");
-});
+//     console.log("Portfolio complete! Check out index.html to see the output!");
+// });
