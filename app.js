@@ -38,7 +38,11 @@ return inquirer.prompt([
     ])
 }
 
-const promptProject = () => {
+const promptProject = portfolioData => {
+    // if there's no "projects" array property, create one
+    if (!portfolioData.projects) {
+        portfolioData.projects = [];
+    }
     console.log(`
     =================
     Add a New Project
@@ -78,13 +82,21 @@ const promptProject = () => {
             message: "Would you like to enter another project?",
             deafult: false
         }
-    ]);
+    ]).then(projectData => {
+        portfolioData.projects.push(projectData);
+        if (projectData.confirmAddProject) {
+            return promptProject(portfolioData);
+        } else {
+            return portfolioData;
+        }
+    });
 };
 
 promptUser()
-    .then(answers => console.log(answers))
     .then(promptProject)
-    .then(projectAnswers => console.log(projectAnswers));
+    .then(portfolioData => {
+        console.log(portfolioData)
+    });
 
 // activate file system module in node.js
 // const fs = require("fs");
