@@ -18,6 +18,9 @@
 
 // ACTUAL CODE FOR PROJECT
 const inquirer = require("inquirer");
+const fs = require("fs");
+const generatePage = require("./src/page-template");
+
 const promptUser = () => {
 return inquirer.prompt([
         {
@@ -148,19 +151,10 @@ const promptProject = portfolioData => {
 promptUser()
     .then(promptProject)
     .then(portfolioData => {
-        console.log(portfolioData)
+        const pageHTML = generatePage(portfolioData);
+        fs.writeFile("./index.html", pageHTML, err => {
+            if (err) throw err;
+
+        console.log("Portfolio complete! Check out index.html to see the output!");
+        })
     });
-
-// activate file system module in node.js
-// const fs = require("fs");
-// //connect to export page-template code
-// const generatePage = require("./src/page-template");
-
-// const pageHTML = generatePage(names, github);
-
-// //generating new file called index.html with the variables names and github and catching error name/message or success
-// fs.writeFile("./index.html", pageHTML, err => {
-//     if (err) throw err;
-
-//     console.log("Portfolio complete! Check out index.html to see the output!");
-// });
